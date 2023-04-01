@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 public @interface Sort {
 
 	boolean invoke() default false;
-	String anirudh() default "";
+	String anirudh() default "MergeSort";
 }
