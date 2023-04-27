@@ -1,46 +1,57 @@
 import java.lang.annotation.*;
+import java.lang.Class.*;
 import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+import java.lang.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.*;  
+// import java.lang.Class.getDeclaredFields;
 
-import annotations.*;
+
+
+import strategy.*;
 
 public class Main{
 	
 	public String execute() throws Throwable {
-		Class<CustomController> controller = CustomController.class;
-		//Annotation[] annotations = controller.getDeclaredAnnotations();
-		//boolean restController = controller.isAnnotationPresent(RestController.Class);
+		Class<CustomSort> controller = CustomSort.class;
+		Field[] fields = controller.getDeclaredFields();
+		CustomSort obj = new CustomSort();
+		for(Field field : fields)
+		{
+			Sort sort = field.getAnnotation(Sort.class);
+			if(sort != null)
+			{
+				
+			
+				String type = sort.type();
+				//List<Integer> list = new ArrayList<Integer>((Collection<Integer>)value);
+				double[] list = (double[])field.get(obj);
+				
+				
+				if(type.equals("bubble"))
+				{	
+					Sorter sorter = new Sorter();
 
-		SortController sortcontroller = controller.getAnnotation(SortController.class);
-		if(sortcontroller != null){
+					list = sorter.Sort(list,new Bubblesort());
+					//System.out.println(list[0]);
+					field.set(obj, list);
+				}
+				
+			}
+			
+		}
 			Method[] methods = controller.getMethods();
 			for(Method method : methods){
-				Sort sort = method.getAnnotation(Sort.class);
-				if(sort.invoke()){
-					if(sort != null){
-						method.invoke(controller.newInstance());
-					}
-				}
+				Invoke invoke = method.getAnnotation(Invoke.class);
+				if(invoke != null){
+					method.invoke(obj);
 			}
+			}
+					return null;
+
 		}
-
-		// RestController restController = controller.getAnnotation(RestController.class);
-		// if (restController != null){
-		// 	Method[] methods = controller.getMethods();
-		// 	for(Method method : methods) {
-		// 		//comment//boolean requestMapping = method.isAnnotationPresent(ResquestMapping.Class)
-
-		// 		// RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
-		// 		// if (requestMapping.invoke()){
-		// 		// 	if(requestMapping != null) {
-		// 		// 		method.invoke(controller.newInstance());
-		// 		// 	}
-		// 		// }
-		// 	}
-
-		// }
 		
-		return null;
-	}
 
 	public static void main(String... args){
 		try{

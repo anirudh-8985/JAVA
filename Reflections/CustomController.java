@@ -1,5 +1,6 @@
 import annotations.*;
 
+// @RestController(number = 10)
 @SortController(strategy = TYPE.MERGE)
 public class CustomController {
 
@@ -13,7 +14,7 @@ public class CustomController {
 	List<Integer> list = Arrays.asList(1,5,2,3,9,0);
 	
 
-@SortController(list={1,3,-5,-9,0},strategy =  "MergeSort")
+@SortController(list={1,3,-5,-9,0},strategy =  "M")
 
 
 	public string field;
